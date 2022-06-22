@@ -1,45 +1,72 @@
 import { Box, Button, Container, Flex, Grid, GridItem, Heading, Icon, Image, ListItem, Tab, TabList, TabPanel, TabPanels, Tabs, Text, UnorderedList, useMediaQuery } from "@chakra-ui/react";
-import NavigationDrawer from "@src/components/pages/home/navigation-drawer";
-import { MeImage } from "@src/config/pathImage";
+// import NavigationDrawer from "@src/components/pages/home/navigation-drawer";
+import { BosImg, BosPreview, MeImage, ShipdeoLogo } from "@src/config/pathImage";
 import { Link } from "react-router-dom";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaRegAddressBook, FaRegUser, FaRegFolder, FaArrowRight, FaRegListAlt } from "react-icons/fa";
 import WorkExperience from "@src/components/pages/home/work-experience";
+import { DownloadIcon } from "@chakra-ui/icons";
+import FloatButton from "@src/components/common/float-button";
+import { useState } from "react";
+import SimpleCard from "@src/components/common/simple-card";
 
 export default function Home() {
   const [LargeScreen] = useMediaQuery("(min-width: 1024px)");
+  const [activeFloatButton, setActiveFloatButton] = useState<string>("profile");
+
+  const floatButtonList = [
+    {
+      name: "profile",
+      children: <Icon as={FaRegUser} color="inherit" />,
+      action: () => setActiveFloatButton("profile"),
+    },
+    {
+      name: "experience",
+      children: <Icon as={FaRegAddressBook} color="inherit" />,
+      action: () => setActiveFloatButton("experience"),
+    },
+    {
+      name: "portfolio",
+      children: <Icon as={FaRegFolder} color="inherit" />,
+      action: () => setActiveFloatButton("portfolio"),
+    },
+    {
+      name: "service",
+      children: <Icon as={FaRegListAlt} color="inherit" />,
+      action: () => setActiveFloatButton("service"),
+    },
+  ];
+
   return (
     <header>
       <Container maxW="1200px">
-        <Flex paddingY={LargeScreen ? 8 : 3} h="fit-content" w="full" alignItems="center" justifyContent="space-between">
+        {/* <Flex paddingY={LargeScreen ? 8 : 3} h="fit-content" w="full" alignItems="center" justifyContent="space-between">
           <Box>
             <Heading as="h3" size="md">
               Satria
             </Heading>
           </Box>
-          {LargeScreen ? (
-            <Box display="flex" columnGap={8}>
-              <Link to="/">Home</Link>
-              <Link to="/about">Blog</Link>
-              <Link to="/about">Services</Link>
-            </Box>
-          ) : (
-            <NavigationDrawer />
-          )}
-        </Flex>
+        </Flex> */}
 
-        <Flex alignItems="center" columnGap={10} rowGap={4} paddingY={LargeScreen ? "60px" : 3} flexDirection={!LargeScreen ? "column" : "row"} justifyContent="space-between">
+        <Flex alignItems="center" columnGap={10} rowGap={4} paddingY={LargeScreen ? "60px" : 8} flexDirection={!LargeScreen ? "column" : "row"} justifyContent="space-between">
           <Image flexBasis={LargeScreen ? "50%" : "100%"} borderRadius="20px" width="100%" maxWidth={LargeScreen ? "410px" : "unset"} src={MeImage} />
           <Box flexBasis={LargeScreen ? "50%" : "100%"}>
-            <Text fontWeight="600">Hello, I am</Text>
+            <Text fontWeight="600" color="blue.500">
+              Hello, I am
+            </Text>
             <Heading as="h2"> Satria Herman</Heading>
             <Text marginTop={6}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque saepe culpa at optio enim fugiat, assumenda sequi quasi quia dolorem cupiditate molestiae aut laborum, quas excepturi eos
-              quae in a necessitatibus voluptate? Eaque delectus est, ex dolor sit fugit, earum optio ratione esse repellat laudantium veniam, ad soluta minima nihil.
+              I'm Frontend Developer that ever worked on 2 companies <a href="">Clodeo</a> and <a href="">Brainmatics</a>. I've been working as a developer for 1 years and i have a such skills like :{" "}
+              <b>React</b>, <b>PHP</b>, <b>JavaScript</b>, <b>Nodejs</b>, <b>Laravel</b>. I also working as Freelance Frontend Developer for around 2 years
             </Text>
 
-            <Button marginTop={5} colorScheme="blue">
-              Download CV
-            </Button>
+            <Flex columnGap={3}>
+              <Button leftIcon={<DownloadIcon />} marginTop={5} colorScheme="blue">
+                Download CV
+              </Button>
+              <Button variant="outline" marginTop={5} colorScheme="blue">
+                Contact Me
+              </Button>
+            </Flex>
           </Box>
         </Flex>
 
@@ -87,21 +114,71 @@ export default function Home() {
 
           <Tabs variant="soft-rounded" margin="20px auto" colorScheme="gray" paddingX="0">
             <TabList padding={1} color="white" justifyContent="center" width="fit-content" rounded="full" marginX="auto">
-              <Tab>Education</Tab>
               <Tab>Work Experience</Tab>
+              <Tab>Education</Tab>
             </TabList>
 
             <TabPanels paddingX="0">
               <TabPanel>
-                <p>one!</p>
+                <WorkExperience />
               </TabPanel>
               <TabPanel>
-                <WorkExperience />
+                <p>one!</p>
               </TabPanel>
             </TabPanels>
           </Tabs>
         </Box>
+
+        <Box padding="30px 0">
+          <Heading textAlign="center" as="h2" size="lg">
+            Portfolio
+          </Heading>
+
+          <Flex marginTop={10} gap={8} flexDirection={LargeScreen ? "row" : "column"}>
+            <Box flexBasis={LargeScreen ? "33%" : "100%"}>
+              <Link to="/portfolio">
+                <SimpleCard
+                  bottomAction={
+                    <Text display="flex" alignItems="center" marginTop={2} color="blue.500">
+                      Detail <Icon marginLeft={2} as={FaArrowRight}></Icon>
+                    </Text>
+                  }
+                  image={BosPreview}
+                  title="Binmas Online System"
+                />
+              </Link>
+            </Box>
+            <Box flexBasis={LargeScreen ? "33%" : "100%"}>
+              <Link to="/portfolio">
+                <SimpleCard
+                  bottomAction={
+                    <Text display="flex" alignItems="center" marginTop={2} color="blue.500">
+                      Detail <Icon marginLeft={2} as={FaArrowRight}></Icon>
+                    </Text>
+                  }
+                  image={ShipdeoLogo}
+                  title="Shipdeo Website"
+                />
+              </Link>
+            </Box>
+            <Box flexBasis={LargeScreen ? "33%" : "100%"}>
+              <Link to="/portfolio">
+                <SimpleCard
+                  bottomAction={
+                    <Text display="flex" alignItems="center" marginTop={2} color="blue.500">
+                      Detail <Icon marginLeft={2} as={FaArrowRight}></Icon>
+                    </Text>
+                  }
+                  image={BosImg}
+                  title="Binmas Online System"
+                />
+              </Link>
+            </Box>
+          </Flex>
+        </Box>
       </Container>
+
+      <FloatButton active={activeFloatButton} buttonList={floatButtonList} />
     </header>
   );
 }
